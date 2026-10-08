@@ -53,6 +53,9 @@ ldd "$dest/bin/bb-probe.exe" "$dest/bin/bb-gpu-capabilities.exe" |
     done
 cp -r scripts patches "$dest/"
 cp run.py LICENSE README.md packaging/windows/README-Windows.txt "$dest/"
+mkdir -p "$dest/licenses"
+cp gpu/third_party/fsr-vulkan/LICENSE.txt "$dest/licenses/FSR-Vulkan-LICENSE.txt"
+cp gpu/third_party/fsr-vulkan/upstream/ffx-1.1.4/sdk/LICENSE.txt "$dest/licenses/FidelityFX-SDK-LICENSE.txt"
 # Korean build: the English README beside the Korean one, and the Korean patch installer.
 cp README.en.md packaging/windows/Install-Korean-Patch.bat "$dest/"
 if [[ -d fsr4_shaders ]]; then cp -r fsr4_shaders "$dest/"; fi
@@ -61,6 +64,7 @@ if [[ -d fsr4_411 ]]; then cp -r fsr4_411 "$dest/"; fi
 # (packaging/windows/build_dlss.sh). Without them the DLSS option stays unavailable.
 if [[ -f out/bbport_dlss.dll && -f out/nvngx_dlss.dll ]]; then
     cp out/bbport_dlss.dll out/nvngx_dlss.dll "$dest/bin/"
+    if [[ -f out/nvngx_dlssg.dll ]]; then cp out/nvngx_dlssg.dll "$dest/bin/"; fi
     mkdir -p "$dest/licenses" && cp out/NVIDIA-DLSS-LICENSE.txt "$dest/licenses/"
     cp gpu/dlss_bridge/LICENSE.txt "$dest/licenses/bbport_dlss-LICENSE.txt"
 else
