@@ -16,6 +16,7 @@ PS4판 *Bloodborne*을 Windows 10/11에서 네이티브로 실행하는 포팅
 |---|---|
 | **VRAM 누수 수정** | 공식 1.6은 텍스처 정리 기능이 한 번 막히면 다시 돌지 않아, 지역을 옮길 때마다 VRAM이 계속 쌓입니다(16GB 카드 기준 약 11GB까지). 원작 리눅스판 0.3의 수정을 옮겨, 20초 동안 쓰지 않은 텍스처를 다시 정리합니다. ([Supermedo#32](https://github.com/Supermedo/bloodborne_pc/pull/32)) |
 | **일본/아시아 버튼 배치 (기본 켜짐)** | **동그라미 = 결정·상호작용, 엑스 = 취소·회피**, 화면 버튼 아이콘도 함께 바뀝니다. 게임 자체의 지역별 배치 판정을 바꾸는 패치입니다. 런처 **Cheats** 페이지(또는 인게임 메뉴)에서 끄면 서양판 배치로 돌아갑니다. ([Supermedo#17](https://github.com/Supermedo/bloodborne_pc/pull/17)) |
+| **엑스박스 패드 터치패드 좌/우** | 공식 1.6은 Back = 터치패드 왼쪽뿐이라 오른쪽(열쇠 아이템, 메시지 평가 등)을 패드로 누를 수 없었습니다. Back + 십자키 ←/→ 로 양쪽을 누릅니다. |
 | **한글 패치 설치 스크립트** | `Install-Korean-Patch.bat`를 실행하면 kairess님의 한글 패치를 원저작자 GitHub 릴리스에서 받아 `mods` 폴더에 설치합니다(아래 참고). |
 | **문제 해결 문서** | AMD RX 6000(RDNA2)에서 겪은 튕김·성능·온라인 문제와 해결 설정: [docs/WINDOWS_TROUBLESHOOTING.md](docs/WINDOWS_TROUBLESHOOTING.md) |
 | 빌드 | 최신 MSYS2(clang 23)에서도 빌드되도록 `build.sh`에 컴파일 옵션 추가. 동작 변경 없음. |
@@ -29,6 +30,9 @@ PS4판 *Bloodborne*을 Windows 10/11에서 네이티브로 실행하는 포팅
 4. **PLAY**. 다음부터는 `Play Bloodborne.exe`로 런처 없이 바로 시작할 수 있습니다.
 
 게임 중 **Insert**(패드는 **L3+R3**)로 포트 메뉴(업스케일러, 해상도, 효과)를 엽니다.
+
+**엑스박스 패드의 터치패드:** **Back + 십자키 ←** = 터치패드 왼쪽(제스처), **Back + 십자키 →** = 터치패드 오른쪽
+(열쇠 아이템, 메시지 평가 등 오른쪽 선택). Back만 눌렀다 떼면 왼쪽입니다. 키보드는 Tab(왼쪽) / Backspace(오른쪽).
 
 ## 한글 패치
 
