@@ -76,11 +76,16 @@ def validate_patch_requirements(names, game):
                              'or disable debug_menu in bbport.ini')
 
 
+# Switches that are on when bbport.ini does not mention them yet (Korean build: Circle confirms).
+EFFECT_DEFAULTS={'tweak_circle_confirm':'1'}
+
+
 def effect_patches(settings):
     names=[]
     for key,(off,on) in EFFECTS.items():
-        if key not in settings: continue
-        name=on if settings[key]=='1' else off
+        value=settings.get(key,EFFECT_DEFAULTS.get(key))
+        if value is None: continue
+        name=on if value=='1' else off
         if name: names.append(name)
     # Enemy Control and the free camera use the same buttons: the free camera wins.
     if 'Enemy Control' in names and 'Restore Debug Camera' in names:

@@ -46,7 +46,7 @@ inline constexpr Effect Effects[] = {
     {"tweak_no_camera_rotation", "Без автоповорота камеры", false},
     {"tweak_easy_run", "Бег с меньшим наклоном стика", false},
     {"tweak_ragdoll", "Физика тел как в Dark Souls", false},
-    {"tweak_circle_confirm", "Японская раскладка (Круг — подтверждение)", false},
+    {"tweak_circle_confirm", "Японская раскладка (Круг — подтверждение)", true},
 };
 inline constexpr int EffectCount = int(sizeof(Effects) / sizeof(Effects[0]));
 /// Live output resolutions: the upscaler's output and the UI host targets.
