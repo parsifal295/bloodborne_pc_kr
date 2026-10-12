@@ -571,10 +571,15 @@ void Menu() {
     // Issues #74, #116: leaving the game from the pad (this menu opens with L3+R3). A second
     // press confirms; the window thread then closes like the window's own close button.
     // (From bbport 0.51.)
+    // The ID stays the same while the label changes ("###bb_quit"): with a new ID the button lost
+    // the pad's or keyboard's focus at the first press, which disarmed it at once.
     static bool quit_armed;
     ImGui::SameLine();
-    if (ImGui::Button(quit_armed ? BbSettings::MenuText("Press again to quit", "Нажмите ещё раз для выхода")
-                                 : BbSettings::MenuText("Quit game", "Выйти из игры"))) {
+    const std::string quit_label =
+        std::string(quit_armed ? BbSettings::MenuText("Press again to quit", "Нажмите ещё раз для выхода")
+                               : BbSettings::MenuText("Quit game", "Выйти из игры")) +
+        "###bb_quit";
+    if (ImGui::Button(quit_label.c_str())) {
         if (quit_armed) {
             SDL_Event quit{};
             quit.type = SDL_EVENT_QUIT;
