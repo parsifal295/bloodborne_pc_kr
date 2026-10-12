@@ -180,6 +180,12 @@ void Menu() {
     }
     ImGui::SetNextWindowPos(pos, ImGuiCond_Appearing);
     ImGui::SetNextWindowSize(ImVec2(620.0f * base_scale, 0.0f), ImGuiCond_Appearing);
+    // Taller than the screen at 1440p and below the menu's last rows (Close, Quit game) were off
+    // screen: the window stays within the screen and scrolls instead.
+    ImGui::SetNextWindowSizeConstraints(
+        ImVec2(0.0f, 0.0f),
+        ImVec2(FLT_MAX, std::max(viewport->WorkPos.y + viewport->WorkSize.y - pos.y - 20.0f * base_scale,
+                                 200.0f * base_scale)));
     bool keep_open = true;
     if (!ImGui::Begin(
             BbSettings::MenuText("Bloodborne - Graphics  (Insert / L3+R3)###bbport_settings",
