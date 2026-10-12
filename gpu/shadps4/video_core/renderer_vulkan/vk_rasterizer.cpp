@@ -27,6 +27,7 @@
 #include "video_core/buffer_cache/buffer.h"
 #include "video_core/buffer_cache/buffer_cache.h"
 #include "video_core/renderer_vulkan/liverpool_to_vk.h"
+#include "video_core/renderer_vulkan/vk_indirect_guard.h"
 #include "video_core/renderer_vulkan/vk_instance.h"
 #include "video_core/renderer_vulkan/vk_pipeline_cache.h"
 #include "video_core/renderer_vulkan/vk_rasterizer.h"
@@ -1901,12 +1902,22 @@ void Rasterizer::DispatchIndirectRecord(const ComputePipeline* pipeline, VAddr a
     }
 
     scheduler.EndRendering();
+    // Group counts checked on the GPU first (vk_indirect_guard.h); recorded before the
+    // pipeline's bindings, which the check's own pipeline would disturb.
+    vk::Buffer args = buffer->Handle();
+    u64 args_offset = base;
+    if (IndirectGuard::Enabled()) {
+        if (!indirect_guard) {
+            indirect_guard = std::make_unique<IndirectGuard>(instance, scheduler);
+        }
+        std::tie(args, args_offset) = indirect_guard->CheckArgs(*buffer, base);
+    }
     pipeline->BindResources(set_writes, push_data, {image_infos.data(), image_infos.size()},
                             {buffer_infos.data(), buffer_infos.size()});
 
     const vk::Pipeline handle = pipeline->Handle();
-    const vk::Buffer args = buffer->Handle();
-    const u64 args_offset = base;
+    const vk::Buffer raw_args = buffer->Handle();
+    const u64 raw_offset = base;
     const auto& cs_crumb = pipeline->GetStage(Shader::SwStage::Compute);
     const u32 args_slot = Breadcrumbs::ArgsSlot();
     const Breadcrumbs::Crumb crumb{
@@ -1918,7 +1929,7 @@ void Rasterizer::DispatchIndirectRecord(const ComputePipeline* pipeline, VAddr a
         .args_slot = args_slot,
     };
     scheduler.RecordCrumb(crumb, [=](vk::CommandBuffer cmdbuf) {
-        Breadcrumbs::CopyArgs(cmdbuf, args, args_offset, args_slot);
+        Breadcrumbs::CopyArgs(cmdbuf, raw_args, raw_offset, args_slot); // what the game wrote
         cmdbuf.bindPipeline(vk::PipelineBindPoint::eCompute, handle);
         cmdbuf.dispatchIndirect(args, args_offset);
     });
