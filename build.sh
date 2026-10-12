@@ -25,6 +25,10 @@ MINGW*|MSYS*)
     # meets a new warning. Read by CMake when out/gpu is configured for the first time.
     export CXXFLAGS="${CXXFLAGS:-} -include new -include cmath -include cstdlib -include cwchar -include stdlib.h -include wchar.h"
     export CFLAGS="${CFLAGS:-} -Wno-unknown-warning-option -Wno-error=unused-but-set-global"
+    # Source paths in the binaries (assert and log messages) relative to the checkout, not the
+    # build machine's folders.
+    prefix_map="-ffile-prefix-map=$(cygpath -m "$PWD")/="
+    export CFLAGS="$CFLAGS $prefix_map" CXXFLAGS="$CXXFLAGS $prefix_map"
     cmake -S gpu -B out/gpu -G Ninja -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBB_PGO=off \
         -DBB_LTO="${BB_LTO:-OFF}" -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ >/dev/null
     echo "GPU library and loader: LTO ${BB_LTO:-OFF}"
