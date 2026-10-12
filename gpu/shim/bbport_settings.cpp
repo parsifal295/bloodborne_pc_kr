@@ -63,6 +63,8 @@ void Set(Values& v, const std::string& key, const std::string& value) {
         v.debug_view = std::clamp(i, 0, DebugViewCount - 1);
     } else if (key == "show_fps") {
         v.show_fps = i != 0;
+    } else if (key == "anti_lag") {
+        v.anti_lag = i != 0;
     } else if (key == "menu_pos") {
         float x = -1.0f, y = -1.0f;
         if (std::sscanf(value.c_str(), "%f,%f", &x, &y) == 2 && x >= 0.0f && x <= 1.0f && y >= 0.0f &&
@@ -156,6 +158,7 @@ void Load() {
         {"BB_REACTIVE_MAX", "reactive_max"},
         {"BB_UPSCALE_PRESET", "preset"},
         {"BB_OBJECT_MOTION", "object_motion"},
+        {"BB_ANTI_LAG", "anti_lag"},
     };
     for (const auto& [env, key] : env_keys) {
         if (const char* value = std::getenv(env)) {
@@ -245,6 +248,7 @@ void Save() {
     put("reactive_max", fixed(v.reactive_max, 2));
     put("debug_view", std::to_string(v.debug_view.load()));
     put("show_fps", flag(v.show_fps));
+    put("anti_lag", flag(v.anti_lag));
     put("frame_generation", v.frame_generation == FrameGenerationFsr    ? "fsr"
                             : v.frame_generation == FrameGenerationDlss ? "dlss"
                                                                         : "off");

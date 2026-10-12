@@ -32,6 +32,8 @@ int bbgpu_text_input_begin(const char *initial_utf8, const char *prompt_utf8);
 int bbgpu_text_input_poll(char *out_utf8, uint64_t size);
 /* 1 while the in-game settings menu is open: the game's pad input is held neutral. */
 int bbgpu_overlay_captures_input(void);
+/* AMD Anti-Lag (gpu/shim/bbport_anti_lag.h): the game samples its input (pad reads). */
+void bbgpu_anti_lag_input(void);
 /* Mouse look (runtime_pad.c): the window takes the mouse when it is clicked (relative mode) and
  * lets it go on F1, losing focus or the menu opening. take: motion (pixels) and wheel notches
  * since the last call, reset; captured: 1 while the window holds it; enable: mouse_look=0 in

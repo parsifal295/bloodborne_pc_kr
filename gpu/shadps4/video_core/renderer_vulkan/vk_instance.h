@@ -599,6 +599,7 @@ private:
     bool maintenance_5{};
     bool maintenance_8{};
     bool buffer_marker{};
+    bool anti_lag{}; ///< bbport: VK_AMD_anti_lag and its feature enabled
     bool attachment_feedback_loop{};
     bool image_2d_view_of_3d{};
     bool image_view_min_lod{};

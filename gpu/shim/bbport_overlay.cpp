@@ -13,6 +13,7 @@
 
 #include <SDL3/SDL.h>
 #include "bbport_settings.h"
+#include "bbport_anti_lag.h"
 #include "imgui.h"
 #include "imgui_impl_vulkan.h"
 #include "video_core/renderer_vulkan/vk_instance.h"
@@ -563,6 +564,11 @@ void Menu() {
 
     ImGui::SeparatorText(BbSettings::MenuText("Other", "Прочее"));
     Checkbox(BbSettings::MenuText("FPS counter in corner", "Счётчик FPS в углу"), s.show_fps);
+    // AMD Anti-Lag: greyed out where the driver does not offer VK_AMD_anti_lag.
+    ImGui::BeginDisabled(!BbAntiLag::Supported());
+    Checkbox(BbSettings::MenuText("AMD Anti-Lag (lower input latency)", "AMD Anti-Lag (меньше задержка ввода)"),
+             s.anti_lag);
+    ImGui::EndDisabled();
 
     ImGui::Spacing();
     if (ImGui::Button(BbSettings::MenuText("Close", "Закрыть"))) {
