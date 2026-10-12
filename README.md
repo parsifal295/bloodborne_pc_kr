@@ -53,7 +53,9 @@ PS4판 *Bloodborne*을 Windows 10/11에서 네이티브로 실행하는 포팅
 - 입력 반응은 실제 렌더 FPS를 따릅니다. 실제 렌더가 60 FPS 근처일 때 쓰는 것이 좋습니다.
 - 오브젝트 모션 벡터가 꺼져 있으면 카메라 움직임만으로 중간 프레임을 만들어, 빠르게 움직이는 캐릭터 주변이 덜 정확할 수 있습니다.
   (RX 6000 등 일부 AMD에서는 오브젝트 모션 벡터가 GPU 멈춤을 일으켜 꺼 두는 것을 권합니다.)
-- **DLSS 프레임 생성**은 쓸 수 없습니다(이 배포판의 DLSS 연결 DLL이 1.6판). RTX 카드의 **DLSS 업스케일링은 그대로** 됩니다.
+- **DLSS FG ×2**(NVIDIA RTX 40 이상): Frame generation에서 **DLSS FG ×2**를 고릅니다. DLSS 연결 DLL(`bbport_dlss.dll`, ABI 2)과
+  NVIDIA의 `nvngx_dlssg.dll` 310.9.1은 [AwesomeObserver/bloodborne_pc v2](https://github.com/AwesomeObserver/bloodborne_pc/releases/tag/v2)에서 가져왔습니다.
+  RTX 40 이상에서 직접 확인하지는 못했습니다. 지원하지 않는 카드에서는 프레임 생성 없이 그대로 돌아갑니다.
 
 ## 한글 패치
 
