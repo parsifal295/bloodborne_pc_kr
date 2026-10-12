@@ -2,8 +2,8 @@ Bloodborne (bbport) for Windows
 ===============================
 
 No game files are included. You need your own decrypted dump of Bloodborne CUSA03173
-(the folder with eboot.bin, sce_module, sce_sys, dvdroot_ps4). Game version 1.09 is needed for
-the community patches (60/90/unlocked FPS, resolution, effects); other versions run at 30 FPS.
+(the folder with eboot.bin, sce_module, sce_sys, dvdroot_ps4), updated to version 1.09.
+The supported decrypted executable is verified before preparation and launch.
 
 Requirements
 - Windows 10 (1903 or later) or Windows 11, 64-bit.
@@ -31,11 +31,13 @@ Starting
   Q Triangle, 1/3 L1/R1, R/F L2/R2, Z/C L3/R3, I/K/J/L d-pad, Enter Options, Tab touchpad
   (left half), Backspace touchpad (right half). Xbox pads: Back + d-pad left/right clicks the
   left/right touchpad half (gestures / key items), Back alone the left half.
+- Controls: select a controller and remap keys/buttons.
 
 Data
 - Saves and shader caches: user\ next to Bloodborne.exe (the launcher can pick another folder).
 - Settings: bbport.ini next to Bloodborne.exe; launcher options in %APPDATA%\bbport-launcher.
 - Generated files (prepared game image, patches): out\.
+- Advanced -> Save session log: console log and frame CSV in logs\.
 
 Online play (beta)
 - Register a shadNet account at https://shadnet.shadps4.net. In the launcher open
@@ -63,6 +65,9 @@ Upscaling
 - FSR 3.1 works on every GPU. FSR 4 needs its assets in fsr4_shaders\ (included in this
   package, or Graphics -> "Download FSR 4 assets"); GPUs without the required shader features
   fall back to FSR 3.1 by themselves.
+- FSR 4.1.1/FP8: choose a prepared fsr4_411 folder in Graphics (or BB_FSR411_DIR).
+  The GPU must support the required features. DLL extraction tools require Linux/Proton;
+  Windows uses the generated assets directly.
 
 Mods and patches
 - Put each mod in its own folder under mods\ (dvdroot_ps4\..., or chr\, parts\, ... directly);
@@ -76,4 +81,5 @@ Credits
   shadPS4 team, The Hunter's Dream by droogie.
 - bbport (the Linux port this is built on): https://github.com/deadinside28/bloodborne_pc
 - Windows port: https://github.com/Supermedo/bloodborne_pc
+- This fork: https://github.com/AwesomeObserver/bloodborne_pc (upstream 0.4 migration).
 - The full list of projects and patch authors is in README.md (Credits and licenses).
