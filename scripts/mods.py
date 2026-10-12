@@ -34,7 +34,9 @@ def content_root(folder):
     folder = Path(folder)
     if not folder.is_dir():
         return None
-    for wrapper in ('', 'app0', 'CUSA03173'):
+    # Every retail release (as game_check.SUPPORTED_TITLES; from bbport 0.51).
+    for wrapper in ('', 'app0', 'CUSA03173', 'CUSA00900', 'CUSA00207', 'CUSA00208', 'CUSA00299',
+                    'CUSA01363', 'CUSA03179', 'CUSA03014', 'CUSA03023'):
         base = child(folder, wrapper) if wrapper else folder
         dvdroot = child(base, 'dvdroot_ps4')
         if dvdroot.is_dir():
