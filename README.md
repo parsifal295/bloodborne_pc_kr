@@ -21,6 +21,7 @@ PS4판 *Bloodborne*을 Windows 10/11에서 네이티브로 실행하는 포팅
 | **일본/아시아 버튼 배치 (기본 켜짐)** | **동그라미 = 결정·상호작용, 엑스 = 취소·회피**, 화면 버튼 아이콘도 함께 바뀝니다. 게임 자체의 지역별 배치 판정을 바꾸는 패치입니다. 런처 **Cheats** 페이지(또는 인게임 메뉴)에서 끄면 서양판 배치로 돌아갑니다. ([Supermedo#17](https://github.com/Supermedo/bloodborne_pc/pull/17)) |
 | **엑스박스 패드 터치패드 좌/우** | 터치패드가 없는 패드는 Back = 터치패드 왼쪽뿐이라 오른쪽(휴대품, 메시지 평가 등)을 누를 수 없었습니다. Back + 십자키 ←/→ 로 양쪽을 누릅니다. |
 | **프레임 생성 (실험적, 기본 꺼짐)** | **FSR 3.1 프레임 생성 ×2**(AMD·NVIDIA 모두). AwesomeObserver/bloodborne_pc의 구현을 가져와, 창 크기(4K 모니터면 4K)가 아니라 게임 출력 크기에서 돌도록 고쳤습니다. 아래 참고. |
+| **AMD Anti-Lag (기본 켜짐)** | AMD 그래픽카드에서 드라이버의 Anti-Lag(`VK_AMD_anti_lag`)으로 입력 지연을 줄입니다. 프레임 생성을 켰을 때 조작이 무거워지는 느낌을 덜어 줍니다. 지원하지 않는 카드(NVIDIA 등)에서는 아무것도 하지 않습니다. 아래 참고. |
 | 오버레이 메뉴 | 1440p 이하에서 메뉴가 화면보다 길어 맨 아래 버튼(Close, Quit game)이 잘리던 문제, 패드로 Quit game을 두 번 눌러도 종료되지 않던 문제를 고쳤습니다. |
 | **한글 패치 설치 스크립트** | `Install-Korean-Patch.bat`를 실행하면 kairess님의 한글 패치를 원저작자 GitHub 릴리스에서 받아 `mods` 폴더에 설치합니다(아래 참고). |
 | **문제 해결 문서** | AMD RX 6000(RDNA2)에서 겪은 튕김·성능·온라인 문제와 해결 설정: [docs/WINDOWS_TROUBLESHOOTING.md](docs/WINDOWS_TROUBLESHOOTING.md) |
@@ -56,6 +57,16 @@ PS4판 *Bloodborne*을 Windows 10/11에서 네이티브로 실행하는 포팅
 - **DLSS FG ×2**(NVIDIA RTX 40 이상): Frame generation에서 **DLSS FG ×2**를 고릅니다. DLSS 연결 DLL(`bbport_dlss.dll`, ABI 2)과
   NVIDIA의 `nvngx_dlssg.dll` 310.9.1은 [AwesomeObserver/bloodborne_pc v2](https://github.com/AwesomeObserver/bloodborne_pc/releases/tag/v2)에서 가져왔습니다.
   RTX 40 이상에서 직접 확인하지는 못했습니다. 지원하지 않는 카드에서는 프레임 생성 없이 그대로 돌아갑니다.
+
+### AMD Anti-Lag
+
+프레임 생성은 중간 프레임을 끼워 넣는 만큼 입력이 화면에 늦게 반영됩니다. AMD 그래픽카드에서는 드라이버의 **Anti-Lag**을
+게임에 연결해, CPU가 GPU보다 프레임을 앞서 쌓아 두지 않게 해서 입력 지연을 줄입니다. 프레임 생성을 끈 상태에서도 동작합니다.
+
+- 기본으로 켜져 있습니다. 끄기: 인게임 메뉴(Insert) **Other → AMD Anti-Lag**, 또는 `bbport.ini`의 `anti_lag=0`
+- 드라이버가 지원하지 않는 카드(NVIDIA, 오래된 AMD 드라이버)에서는 메뉴 항목이 회색으로 비활성화되고 아무 영향이 없습니다.
+- `user\last_run.log`에 `Anti-Lag: on (VK_AMD_anti_lag)`이 보이면 켜진 것입니다.
+- RX 6900 XT에서 켜고 꺼도 FPS 차이는 없었습니다(4K, FSR 3.1, 49~51 FPS). 지연 감소 폭은 측정 도구가 없어 재지 못했습니다.
 
 ## 한글 패치
 
